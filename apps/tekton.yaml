@@ -12,9 +12,9 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: https://github.com/tektoncd/pipeline
-    targetRevision: v0.9.2
-    path: config
+    repoURL: https://github.com/tylerauerbeck/labs-ci-cd
+    targetRevision: 2.0
+    path: tooling/tekton
 
   # Destination cluster and namespace to deploy the application
   destination:
