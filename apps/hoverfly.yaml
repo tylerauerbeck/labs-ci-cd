@@ -11,6 +11,12 @@ spec:
   # The project the application belongs to.
   project: default
 
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+
   # Source of the application manifests
   source:
     repoURL: https://github.com/helm/charts
