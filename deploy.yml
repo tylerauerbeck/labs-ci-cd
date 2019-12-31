@@ -7,7 +7,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   # The project the application belongs to.
-  project: labs-ci-cd 
+  project: default 
 
   # Source of the application manifests
   source:
