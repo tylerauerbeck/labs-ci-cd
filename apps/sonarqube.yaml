@@ -16,10 +16,170 @@ spec:
     helm:
       releaseName: sonarqube 
 
-      valueFiles:
-      - values.yaml
+      values: |
+        replicaCount: 1
+        deploymentStrategy: {}
+        image:
+          repository: sonarqube
+          tag: 7.9.1-community
+          securityContext:
+            fsGroup: 999
+          elasticsearch:
+            configureNode: true
+            bootstrapChecks: true
+          service:
+            type: ClusterIP
+            externalPort: 9000
+            internalPort: 9000
+            labels:
+            annotations: {}
+          ingress:
+            enabled: false
+            annotations: {}
+            tls: []
+          affinity: {}
+          tolerations: []
+          nodeSelector: {}
+          hostAliases: []
+          readinessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 6
+            sonarWebContext: /
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            sonarWebContext: /
+          extraEnv: {}
+          annotations: {}
+          resources: {}
+          persistence:
+            enabled: false
+            annotations: {}
+            storageClass:
+            accessMode: ReadWriteOnce
+            size: 10Gi
+          plugins:
+            install: []
+            resources: {}
+          customCerts:
+            enabled: false
+            secretName: my-cacerts
+          database:
+            type: "mysql"
+          mysql:
+            enabled: true
+            mysqlUser: "sonarUser"
+            mysqlPassword: "sonarPass"
+            mysqlDatabase: "sonarDB"
+          service:
+            port: 3306
+ 
       
   destination:
     server: https://kubernetes.default.svc
     namespace: labs-ci-cd 
+
+replicaCount: 1
+
+deploymentStrategy: {}
+
+image:
+  repository: sonarqube
+  tag: 7.9.1-community
+  # If using a private repository, the name of the imagePullSecret to use
+  # pullSecret: my-repo-secret
+
+securityContext:
+  fsGroup: 999
+
+elasticsearch:
+  configureNode: true
+  bootstrapChecks: true
+
+service:
+  type: ClusterIP
+  externalPort: 9000
+  internalPort: 9000
+  labels:
+  annotations: {}
+ingress:
+  enabled: false
+  annotations: {}
+  tls: []
+
+affinity: {}
+tolerations: []
+nodeSelector: {}
+
+hostAliases: []
+
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 6
+  sonarWebContext: /
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  sonarWebContext: /
+
+extraEnv: {}
+annotations: {}
+resources: {}
+
+persistence:
+  enabled: false
+  annotations: {}
+  storageClass:
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+plugins:
+  install: []
+  resources: {}
+
+# A custom sonar.properties file can be provided via dictionary.
+# For example:
+# sonarProperties:
+#   sonar.forceAuthentication: true
+#   sonar.security.realm: LDAP
+#   ldap.url: ldaps://organization.com
+
+# Additional sonar properties to load from a secret with a key "secret.properties" (must be a string)
+# sonarSecretProperties:
+
+# Kubernetes secret that contains the encryption key for the sonarqube instance.
+# The secret must contain the key 'sonar-secret.txt'.
+# The 'sonar.secretKeyPath' property will be set automatically.
+# sonarSecretKey: "settings-encryption-secret"
+
+customCerts:
+  enabled: false
+  secretName: my-cacerts
+
+database:
+  type: "mysql"
+
+mysql:
+  # Enable to deploy the mySQL chart
+  enabled: true
+  # To use an external mySQL instance, set enabled to false and uncomment
+  # the line below:
+  # mysqlServer: ""
+  # To use an external secret for the password for an external mySQL instance,
+  # set enabled to false and provide the name of the secret on the line below:
+  # mysqlPasswordSecret: ""
+  mysqlUser: "sonarUser"
+  mysqlPassword: "sonarPass"
+  mysqlDatabase: "sonarDB"
+  # mysqlParams:
+  #   useSSL: "true"
+  # Specify the TCP port that mySQL should use
+  service:
+    port: 3306
+
+podLabels: {}
+# For compatibility with 8.0 replace by "/opt/sq"
+sonarqubeFolder: /opt/sonarqube
 
