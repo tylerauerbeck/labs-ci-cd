@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: sonarqube
-  namespace: arg-cd
+  namespace: argo-cd
 spec:
   project: default
   source:
@@ -23,4 +23,4 @@ spec:
   # Destination cluster and namespace to deploy the application
   destination:
     server: https://kubernetes.default.svc
-    namespace: local-nexus
+    namespace: labs-ci-cd
