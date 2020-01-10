@@ -1,0 +1,16 @@
+MEMORY_LIMIT            Maximum amount of memory the container can use.                                                  512Mi
+NAMESPACE               The OpenShift Namespace where the ImageStream resides.                                           openshift
+DATABASE_SERVICE_NAME   The name of the OpenShift Service exposed for the database.                                      postgresql
+POSTGRESQL_USER         Username for PostgreSQL user that will be used for accessing the database.   expression          user[A-Z0-9]{3}
+POSTGRESQL_PASSWORD     Password for the PostgreSQL connection user.                                 expression          [a-zA-Z0-9]{16}
+POSTGRESQL_DATABASE     Name of the PostgreSQL database accessed.                                                        sampledb
+VOLUME_CAPACITY         Volume space available for data, e.g. 512Mi, 2Gi.                                                1Gi
+POSTGRESQL_VERSION
+
+MEMORY_LIMIT=512Mi
+NAMESPACE=labs-ci-cd
+DATABASE_SERVICE_NAME=sonarqube-postgresql
+POSTGRESQL_PASSWORD=secretpassword
+POSTGRESQL_DATABASE=sonardb
+VOLUME_CAPACITY=5Gi
+POSTGRESQL_VERSION=9.6

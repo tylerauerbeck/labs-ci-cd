@@ -2,21 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tekton-pipelines 
-  namespace: argocd
-  # Add a this finalizer ONLY if you want these to cascade delete.
+  namespace: argo-cd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  # The project the application belongs to.
   project: default
 
-  # Source of the application manifests
   source:
     repoURL: https://github.com/tylerauerbeck/labs-ci-cd
     targetRevision: "2.0"
     path: tooling/tekton
 
-  # Destination cluster and namespace to deploy the application
   destination:
     server: https://kubernetes.default.svc
     namespace: tekton-pipelines 
